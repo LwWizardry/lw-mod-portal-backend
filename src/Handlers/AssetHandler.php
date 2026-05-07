@@ -50,7 +50,7 @@ class AssetHandler {
 		if($mime === false) {
 			throw new InternalDescriptiveException('Not able to read mime type from logo file.');
 		}
-		$response->withHeader('Content-Type', $mime);
+		$response = $response->withHeader('Content-Type', $mime);
 		$content = file_get_contents($filePath);
 		if($content === false) {
 			throw new InternalDescriptiveException('Failed to read logo file.');

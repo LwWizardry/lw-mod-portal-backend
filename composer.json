@@ -1,17 +1,17 @@
 {
-    "autoload": {
-        "psr-4": {
-            "MP\\": "src/"
-        }
-    },
-    "require": {
-        "ext-pdo": "*",
-        "ext-json": "*",
-        "ext-curl": "*",
-        "slim/slim": "4.*",
-        "slim/psr7": "^1.6.1",
-        "vlucas/phpdotenv": "^5.5",
-	    "ext-imagick": "*",
-	    "ext-fileinfo": "*"
-    }
+	"autoload": {
+		"psr-4": {
+			"MP\\": "src/"
+		}
+	},
+	"require": {
+		"ext-pdo": "*",
+		"ext-json": "*",
+		"ext-curl": "*",
+		"slim/slim": "4.*",
+		"slim/psr7": "^1.6.1",
+		"vlucas/phpdotenv": "^5.5",
+		"ext-imagick": "*",
+		"ext-fileinfo": "*"
+	}
 }

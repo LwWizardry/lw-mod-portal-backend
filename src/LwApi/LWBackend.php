@@ -10,7 +10,7 @@ class LWBackend {
 	 * @return LWComment[]
 	 */
 	public static function queryCommentsForPost(string $postID): array {
-		$query = 'query GetComments($objid:String!){comments(objid:$objid){id createdat editedat body author{id username picture flair}}}';
+		$query = 'query GetComments($objid:String!){comments(objectId:$objid){id createdAt editedAt body author{id username picture flair}}}';
 		$queryResponse = self::queryFromLogicWorldBackend($query, [
 			'objid' => $postID,
 		]);
@@ -29,8 +29,8 @@ class LWBackend {
 				$comment_id = JsonValidator::getString($commentObject, 'id');
 				$comment_body = JsonValidator::getString($commentObject, 'body');
 				$comment_author = JsonValidator::getObject($commentObject, 'author');
-				$comment_createdAt = JsonValidator::getDateTime($commentObject, 'createdat');
-				$comment_editedAt = JsonValidator::getDateTimeOptional($commentObject, 'editedat');
+				$comment_createdAt = JsonValidator::getDateTime($commentObject, 'createdAt');
+				$comment_editedAt = JsonValidator::getDateTimeOptional($commentObject, 'editedAt');
 				$author_id = JsonValidator::getUInt($comment_author, 'id');
 				$author_username = JsonValidator::getString($comment_author, 'username');
 				$author_picture = JsonValidator::getString($comment_author, 'picture');
@@ -54,7 +54,7 @@ class LWBackend {
 	}
 	
 	public static function queryFromLogicWorldBackend(string $query, array $variables): string {
-		return self::performGraphQueryLanguage('https://logicworld.net/graphql', $query, $variables);
+		return self::performGraphQueryLanguage('https://logic.world/graphql', $query, $variables);
 	}
 	
 	public static function performGraphQueryLanguage(string $url, string $query, array $variables): string {
@@ -75,10 +75,8 @@ class LWBackend {
 		$curlResponse = curl_exec($ch);
 		if($curlResponse === FALSE) {
 			$curlError = curl_error($ch);
-			curl_close($ch);
 			throw new InternalDescriptiveException('Failed to execute post request to "' . $url . '" with data "' . $content . '" because: ' . $curlError);
 		}
-		curl_close($ch);
 		if(gettype($curlResponse) !== "string") {
 			throw new InternalDescriptiveException('Failed to execute post request to "' . $url . '" with data "' . $content . '" because return type was not string but: ' . gettype($curlResponse));
 		}
