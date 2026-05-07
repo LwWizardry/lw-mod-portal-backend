@@ -75,10 +75,8 @@ class LWBackend {
 		$curlResponse = curl_exec($ch);
 		if($curlResponse === FALSE) {
 			$curlError = curl_error($ch);
-			curl_close($ch);
 			throw new InternalDescriptiveException('Failed to execute post request to "' . $url . '" with data "' . $content . '" because: ' . $curlError);
 		}
-		curl_close($ch);
 		if(gettype($curlResponse) !== "string") {
 			throw new InternalDescriptiveException('Failed to execute post request to "' . $url . '" with data "' . $content . '" because return type was not string but: ' . gettype($curlResponse));
 		}
