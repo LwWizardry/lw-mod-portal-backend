@@ -4,6 +4,7 @@ namespace MP\Helpers;
 
 use DateTime;
 use DateTimeZone;
+use Exception;
 use JsonException;
 use MP\ErrorHandling\InternalDescriptiveException;
 
@@ -77,16 +78,21 @@ class JsonValidator {
 			return null;
 		}
 		if(gettype($value) === 'string') {
+			// Current date format is '2026-05-06T20:01:33Z'
 			$number = $value;
 		} else if(gettype($value) === 'integer') {
 			if($value <= 0) {
 				throw new InternalDescriptiveException('Expected value of key "' . $key . '" of type "timestamp", but got negative value ' . $value . ' in JSON: ' . json_encode($object));
 			}
-			$number = strval($value);
+			$number = '@' . $value;
 		} else {
 			throw new InternalDescriptiveException('Expected value of key "' . $key . '" of type "timestamp (number/string)", but got ' . gettype($value) . ' in JSON: ' . json_encode($object));
 		}
-		return new DateTime('@' . $number, new DateTimeZone('UTC'));
+		try {
+			return new DateTime($number, new DateTimeZone('UTC'));
+		} catch (Exception $e) {
+			throw new InternalDescriptiveException('Could not parse date ' . $number . ': ' . $e->getMessage());
+		}
 	}
 	
 	public static function getDateTime(array $object, string $key): null|DateTime {
