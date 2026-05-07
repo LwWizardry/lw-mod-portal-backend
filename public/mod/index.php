@@ -1,5 +1,6 @@
 <?php
 
+//TODO: Once this ends up on the production domain, move all error handling into a secure channel.
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -78,6 +79,7 @@ SlimSetup::getSlim()->get('/mod/{name}[/]', function (Request $request, Response
 	
 	//Old forwarding: <!--<script>window.location.href = "$destination_url";</script>-->
 	// Bad as it adds a browser history entry...
+	
 	$response->getBody()->write(
 		<<<HTML
 		<!DOCTYPE html>

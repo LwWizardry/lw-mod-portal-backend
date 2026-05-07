@@ -92,7 +92,7 @@ class EditModHandler {
 			//Steps up to the folder, that contains the 'src' folder.
 			$root = AssetHandler::getAssetFolder() . 'logos/';
 			if(!is_dir($root)) {
-				throw new InternalDescriptiveException('Logo folder does not exist! Cannot store the logo anywhere.');
+				throw new InternalDescriptiveException('Logos folder does not exist! Cannot store the logo anywhere.');
 			}
 			//Logo folder of this mod:
 			$modLogoFolder = $root . $modIdentifier . '/';
